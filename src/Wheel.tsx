@@ -7,15 +7,21 @@ const Section = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 400px;
-  width: 400px;
+  height: 500px;
+  width: 500px;
   position: relative;
 `;
 
-const StyledWheel = styled.div<{ rotation: number; spinning: boolean }>`
+const WheelContainer = styled.div`
   position: relative;
   width: 300px;
   height: 300px;
+`;
+
+const StyledWheel = styled.div<{ rotation: number; spinning: boolean }>`
+  position: absolute;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   border: 2px solid #000;
   transform-origin: center;
@@ -29,9 +35,13 @@ const Slice = styled.div<{ angle: number; selected: boolean }>`
   left: 50%;
   width: 50%;
   height: 50%;
-  background-color: ${({ selected }) => (selected ? 'yellow' : '#eee')};
+  background: ${({ selected }) =>
+    selected
+      ? 'radial-gradient(circle, yellow, orange)'
+      : 'radial-gradient(circle, #eee, #ddd)'};
+  border: 2px solid #000;
   transform-origin: 0% 100%;
-  clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,6 +51,21 @@ const Slice = styled.div<{ angle: number; selected: boolean }>`
 const Name = styled.span`
   position: absolute;
   transform: rotate(-45deg);
+  white-space: nowrap;
+  color: #000;
+`;
+
+const WinnerIndicator = styled.div`
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 20px solid red;
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  z-index: 10;
 `;
 
 interface Props {
@@ -56,30 +81,33 @@ export const Wheel: FC<Props> = ({ participants }) => {
 
   const startSpin = () => {
     setSpinning(true);
-    const randomAngle = Math.floor(Math.random() * 360) + 1800; // spin at least 5 full rotations
-    setRotation(rotation + randomAngle); // Increment rotation to ensure smooth spin
+    const randomAngle = Math.floor(Math.random() * 360) + 1800;
+    setRotation(rotation + randomAngle);
 
     setTimeout(() => {
       setSpinning(false);
       const finalRotation = randomAngle % 360;
       const selectedSlice = Math.floor(finalRotation / sliceAngle);
       setSelectedIndex(participants.length - selectedSlice - 1);
-    }, 5000); // Adjust duration as needed
+    }, 5000);
   };
 
   return (
     <Section>
       <h2>Wheel</h2>
-      <StyledWheel rotation={rotation} spinning={spinning}>
-        {participants.map((name, i) => {
-          const rotate = i * sliceAngle;
-          return (
-            <Slice key={i} angle={rotate} selected={selectedIndex === i}>
-              <Name>{name}</Name>
-            </Slice>
-          );
-        })}
-      </StyledWheel>
+      <WheelContainer>
+        <StyledWheel rotation={rotation} spinning={spinning}>
+          {participants.map((name, i) => {
+            const rotate = i * sliceAngle;
+            return (
+              <Slice key={i} angle={rotate} selected={selectedIndex === i}>
+                <Name>{name}</Name>
+              </Slice>
+            );
+          })}
+        </StyledWheel>
+        <WinnerIndicator />
+      </WheelContainer>
       <Button onClick={startSpin} disabled={spinning}>
         Spin
       </Button>
