@@ -18,41 +18,12 @@ const WheelContainer = styled.div`
   height: 300px;
 `;
 
-const StyledWheel = styled.div<{ rotation: number; spinning: boolean }>`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 2px solid #000;
-  transform-origin: center;
-  transition: transform 5s ease-out;
-  transform: ${({ rotation }) => `rotate(${rotation}deg)`};
-`;
-
-const Slice = styled.div<{ angle: number; selected: boolean }>`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 50%;
-  height: 50%;
-  background: ${({ selected }) =>
-    selected
-      ? 'radial-gradient(circle, yellow, orange)'
-      : 'radial-gradient(circle, #eee, #ddd)'};
-  border: 2px solid #000;
-  transform-origin: 0% 100%;
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: ${({ angle }) => `rotate(${angle}deg) skewY(-30deg)`};
-`;
-
 const Name = styled.span`
   position: absolute;
   transform: rotate(-45deg);
   white-space: nowrap;
   color: #000;
+  z-index: 1;
 `;
 
 const WinnerIndicator = styled.div`
@@ -71,6 +42,27 @@ const WinnerIndicator = styled.div`
 interface Props {
   participants: string[];
 }
+
+const CircleContainer = styled.div<{ rotation: number; spinning: boolean }>`
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  overflow: hidden;
+  transform-origin: center;
+  transition: transform 5s ease-out;
+  transform: ${({ rotation }) => `rotate(${rotation}deg)`};
+`;
+
+const Sector = styled.div<{ angle: number; color: string }>`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
+  background-color: ${({ color }) => color};
+  transform-origin: 50% 50%;
+  transform: ${({ angle }) => `rotate(${angle}deg)`};
+`;
 
 export const Wheel: FC<Props> = ({ participants }) => {
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
@@ -96,16 +88,20 @@ export const Wheel: FC<Props> = ({ participants }) => {
     <Section>
       <h2>Wheel</h2>
       <WheelContainer>
-        <StyledWheel rotation={rotation} spinning={spinning}>
+        <CircleContainer rotation={rotation} spinning={spinning}>
           {participants.map((name, i) => {
             const rotate = i * sliceAngle;
             return (
-              <Slice key={i} angle={rotate} selected={selectedIndex === i}>
+              <Sector
+                key={i}
+                angle={i * rotate}
+                color={i % 2 === 0 ? '#ffdddd' : '#ddffdd'}
+              >
                 <Name>{name}</Name>
-              </Slice>
+              </Sector>
             );
           })}
-        </StyledWheel>
+        </CircleContainer>
         <WinnerIndicator />
       </WheelContainer>
       <Button onClick={startSpin} disabled={spinning}>
