@@ -18,6 +18,15 @@ const Input = styled.input`
   width: 60%;
 `;
 
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+  & > button {
+    margin-left: 10px;
+  }
+`;
+
 export const Participants = () => {
   return (
     <Section>
@@ -25,6 +34,10 @@ export const Participants = () => {
       <Input type="text" />
       <Button>Add</Button>
       <h2>Participants</h2>
+      <ButtonGroup>
+        <Button>Shuffle</Button>
+        <Button>Sort</Button>
+      </ButtonGroup>
       <ul>
         <ListItem>Participant 1</ListItem>
         <ListItem>Participant 2</ListItem>
