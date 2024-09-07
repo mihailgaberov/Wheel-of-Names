@@ -1,2 +1,2 @@
 # Wheel-of-Names
-Build Your Own Wheel of Names challengeл
+Build Your Own Wheel of Names challenge
