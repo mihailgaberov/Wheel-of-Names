@@ -1,6 +1,8 @@
 import './App.css';
 
 import styled from 'styled-components';
+import { Participants } from './Participants';
+import { Wheel } from './Wheel';
 
 const Header = styled.header`
   background-color: #282c34;
@@ -19,43 +21,6 @@ const Main = styled.main`
   padding: 20px;
 `;
 
-const Section = styled.section`
-  width: 40%;
-`;
-
-const Input = styled.input`
-  padding: 10px;
-  margin-right: 10px;
-  width: 60%;
-`;
-
-const Button = styled.button`
-  padding: 10px;
-  background-color: #282c34;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 1rem;
-  font-weight: bold;
-
-  // hover effect
-  &:hover {
-    background-color: #61dafb;
-  }
-`;
-
-const ListItem = styled.li`
-  padding: 10px;
-  margin: 5px;
-  background-color: #f9f9f9;
-  border-radius: 5px;
-  list-style: none;
-  color: #282c34;
-  font-weight: bold;
-  font-size: 1rem;
-`;
-
 function App() {
   return (
     <>
@@ -63,21 +28,8 @@ function App() {
         <h1>Wheel of Names</h1>
       </Header>
       <Main>
-        <Section>
-          <h2>Add Participants</h2>
-          <Input type="text" />
-          <Button>Add</Button>
-          <h2>Participants</h2>
-          <ul>
-            <ListItem>Participant 1</ListItem>
-            <ListItem>Participant 2</ListItem>
-            <ListItem>Participant 3</ListItem>
-          </ul>
-        </Section>
-        <Section>
-          <h2>Wheel</h2>
-          <Button>Spin</Button>
-        </Section>
+        <Participants />
+        <Wheel />
       </Main>
     </>
   );
