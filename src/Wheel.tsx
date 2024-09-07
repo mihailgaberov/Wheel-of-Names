@@ -20,10 +20,12 @@ const WheelContainer = styled.div`
 
 const Name = styled.span`
   position: absolute;
-  transform: rotate(-45deg);
+  transform: rotate(-90deg);
   white-space: nowrap;
   color: #000;
-  z-index: 1;
+  font-size: 1.2rem;
+  font-weight: bold;
+  z-index: 10;
 `;
 
 const WinnerIndicator = styled.div`
@@ -39,11 +41,7 @@ const WinnerIndicator = styled.div`
   z-index: 10;
 `;
 
-interface Props {
-  participants: string[];
-}
-
-const CircleContainer = styled.div<{ rotation: number; spinning: boolean }>`
+const CircleContainer = styled.div<{ rotation: number }>`
   position: relative;
   width: 300px;
   height: 300px;
@@ -63,6 +61,10 @@ const Sector = styled.div<{ angle: number; color: string }>`
   transform-origin: 50% 50%;
   transform: ${({ angle }) => `rotate(${angle}deg)`};
 `;
+
+interface Props {
+  participants: string[];
+}
 
 export const Wheel: FC<Props> = ({ participants }) => {
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
@@ -88,9 +90,8 @@ export const Wheel: FC<Props> = ({ participants }) => {
     <Section>
       <h2>Wheel</h2>
       <WheelContainer>
-        <CircleContainer rotation={rotation} spinning={spinning}>
+        <CircleContainer rotation={rotation}>
           {participants.map((name, i) => {
-            console.log(name);
             const rotate = i * sliceAngle;
             return (
               <Sector
