@@ -90,11 +90,12 @@ export const Wheel: FC<Props> = ({ participants }) => {
       <WheelContainer>
         <CircleContainer rotation={rotation} spinning={spinning}>
           {participants.map((name, i) => {
+            console.log(name);
             const rotate = i * sliceAngle;
             return (
               <Sector
                 key={i}
-                angle={i * rotate}
+                angle={rotate}
                 color={i % 2 === 0 ? '#ffdddd' : '#ddffdd'}
               >
                 <Name>{name}</Name>
