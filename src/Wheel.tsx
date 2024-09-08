@@ -37,7 +37,7 @@ const WinnerIndicator = styled.div`
   border-bottom: 20px solid red;
   top: 50%;
   left: 100%;
-  transform: translate(-50%, -50%) rotate(90deg);
+  transform: translate(-50%, -50%) rotate(-90deg);
   z-index: 10;
 `;
 
