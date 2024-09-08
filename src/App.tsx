@@ -20,7 +20,6 @@ const Main = styled.main`
   justify-content: space-around;
   padding: 20px;
 
-  // This is a media query that will apply the styles only if the screen width is less than 768px
   @media (max-width: 768px) {
     flex-direction: column-reverse;
     align-items: center;
@@ -35,7 +34,17 @@ function App() {
       </Header>
       <Main>
         <Participants />
-        <Wheel participants={['Mihail', 'Xavi', 'Ale', 'Javi']} />
+        <Wheel
+          participants={[
+            'Mihail',
+            'Xavi',
+            'Ale',
+            'Javi',
+            'Alex',
+            'Sara',
+            'Jorge',
+          ]}
+        />
       </Main>
     </>
   );

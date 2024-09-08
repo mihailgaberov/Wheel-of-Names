@@ -43,32 +43,65 @@ const CircleContainer = styled.div<{ rotation: number }>`
   transform: ${({ rotation }) => `rotate(${rotation}deg)`};
 `;
 
-const Sector = styled.div<{ angle: number; color: string }>`
+const Sector = styled.div<{
+  angle: number;
+  color: string;
+  sectorWidth: number;
+}>`
   position: absolute;
   width: 100%;
   height: 100%;
-  clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
+  clip-path: ${({ sectorWidth }) =>
+    `polygon(50% 50%, 100% 135%, 100% ${sectorWidth}%)`};
   background-color: ${({ color }) => color};
   transform-origin: 50% 50%;
   transform: ${({ angle }) => `rotate(${angle}deg)`};
 `;
 
-const Name = styled.span<{ angle: number }>`
+const Name = styled.span<{ angle: number; sectorWidth: number }>`
   position: absolute;
-  top: 50%;
+  margin: -5px;
+  top: 65%;
   left: 50%;
   transform: ${({ angle }) =>
     angle > 180
-      ? 'translate(120px, -50%) rotate(180deg)'
-      : 'translate(75px, -50%) rotate(0deg)'};
-  transform-origin: 10% 50%;
+      ? 'translate(120px, -50%) rotate(190deg)'
+      : 'translate(75px, 0) rotate(20deg)'};
+  transform-origin: 20% 50%;
   white-space: nowrap;
   color: #000;
-  font-size: 0.9rem;
+  font-size: ${({ sectorWidth }) => (sectorWidth < 30 ? '0.6rem' : '0.9rem')};
   z-index: 1;
   text-align: center;
-  width: 80px;
+  width: ${({ sectorWidth }) => (sectorWidth < 30 ? '50px' : '80px')};
 `;
+const colors = [
+  '#FF5733', // Vibrant orange
+  '#FFBD33', // Bright yellow
+  '#DBFF33', // Light green-yellow
+  '#75FF33', // Bright green
+  '#33FF57', // Bright teal-green
+  '#33FFBD', // Turquoise
+  '#33A1FF', // Sky blue
+  '#3357FF', // Bright blue
+  '#5733FF', // Purple
+  '#BD33FF', // Violet
+  '#FF33A1', // Hot pink
+  '#FF3333', // Red
+  '#FF6F33', // Coral
+  '#FFB833', // Gold
+  '#DFFF33', // Lime green
+  '#7DFF33', // Olive green
+  '#33FF77', // Mint green
+  '#33FFB3', // Pale turquoise
+  '#33B2FF', // Deep sky blue
+  '#5C33FF', // Royal blue
+  '#A533FF', // Medium purple
+  '#FF33B5', // Fuchsia
+  '#FF3366', // Hot pink
+];
+
+const MAX_SECTORS = 36;
 
 interface Props {
   participants: string[];
@@ -79,7 +112,20 @@ export const Wheel: FC<Props> = ({ participants }) => {
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
 
-  const sliceAngle = 360 / participants.length;
+  const numSectors = Math.min(participants.length, MAX_SECTORS);
+  const sliceAngle = 360 / numSectors;
+  const sectorWidth = Math.round(360 / numSectors);
+
+  // Generate colors ensuring no two adjacent sectors are the same
+  const getColor = (index: number) => {
+    const colorIndex = index % colors.length;
+    const prevColorIndex = (index - 1 + colors.length) % colors.length;
+    return colors[
+      colorIndex === prevColorIndex
+        ? (colorIndex + 1) % colors.length
+        : colorIndex
+    ];
+  };
 
   const startSpin = () => {
     setSpinning(true);
@@ -90,7 +136,7 @@ export const Wheel: FC<Props> = ({ participants }) => {
       setSpinning(false);
       const finalRotation = randomAngle % 360;
       const selectedSlice = Math.floor(finalRotation / sliceAngle);
-      setSelectedIndex(participants.length - selectedSlice - 1);
+      setSelectedIndex(numSectors - selectedSlice - 1);
     }, 5000);
   };
 
@@ -99,15 +145,19 @@ export const Wheel: FC<Props> = ({ participants }) => {
       <h2>Wheel</h2>
       <WheelContainer>
         <CircleContainer rotation={rotation}>
-          {participants.map((name, i) => {
+          {participants.slice(0, numSectors).map((name, i) => {
             const rotate = i * sliceAngle;
+            const color = getColor(i);
             return (
               <Sector
                 key={i}
                 angle={rotate}
-                color={i % 2 === 0 ? '#ffdddd' : '#ddffdd'}
+                color={color}
+                sectorWidth={sectorWidth}
               >
-                <Name angle={rotate}>{name}</Name>
+                <Name angle={rotate} sectorWidth={sectorWidth}>
+                  {name}
+                </Name>
               </Sector>
             );
           })}
