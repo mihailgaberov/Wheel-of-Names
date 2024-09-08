@@ -29,7 +29,7 @@ function App() {
       </Header>
       <Main>
         <Participants />
-        <Wheel participants={['gosho', 'tosho', 'vanyo', 'pepu']} />
+        <Wheel participants={['Mihail', 'Xavi', 'Ale', 'Javi']} />
       </Main>
     </>
   );

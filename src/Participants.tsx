@@ -13,7 +13,8 @@ const ListItem = styled.li`
 `;
 
 const Input = styled.input`
-  padding: 10px;
+  padding: 0.8rem;
+  font-size: 1.2rem;
   margin-right: 10px;
   width: 60%;
 `;

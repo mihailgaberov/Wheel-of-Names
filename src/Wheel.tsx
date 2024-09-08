@@ -16,16 +16,7 @@ const WheelContainer = styled.div`
   position: relative;
   width: 300px;
   height: 300px;
-`;
-
-const Name = styled.span`
-  position: absolute;
-  transform: rotate(-90deg);
-  white-space: nowrap;
-  color: #000;
-  font-size: 1.2rem;
-  font-weight: bold;
-  z-index: 10;
+  margin-bottom: 2rem;
 `;
 
 const WinnerIndicator = styled.div`
@@ -60,6 +51,18 @@ const Sector = styled.div<{ angle: number; color: string }>`
   background-color: ${({ color }) => color};
   transform-origin: 50% 50%;
   transform: ${({ angle }) => `rotate(${angle}deg)`};
+`;
+
+const Name = styled.span<{ angle: number }>`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: ${({ angle }) => `rotate(${-angle}deg) translate(90px)`};
+  transform-origin: 0 0;
+  white-space: nowrap;
+  color: #000;
+  font-size: 1rem;
+  font-weight: bold;
 `;
 
 interface Props {
@@ -99,7 +102,7 @@ export const Wheel: FC<Props> = ({ participants }) => {
                 angle={rotate}
                 color={i % 2 === 0 ? '#ffdddd' : '#ddffdd'}
               >
-                <Name>{name}</Name>
+                <Name angle={rotate}>{name}</Name>
               </Sector>
             );
           })}

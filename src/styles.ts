@@ -5,13 +5,13 @@ export const Section = styled.section`
 `;
 
 export const Button = styled.button`
-  padding: 10px;
+  padding: 1rem;
   background-color: #282c34;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: bold;
 
   // hover effect
