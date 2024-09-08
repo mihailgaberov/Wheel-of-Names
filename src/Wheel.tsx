@@ -57,12 +57,14 @@ const Name = styled.span<{ angle: number }>`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(75px, -30%) rotate(${({ angle }) => -angle}deg);
-  transform-origin: center;
+  transform: ${({ angle }) =>
+    angle > 180
+      ? 'translate(120px, -50%) rotate(180deg)'
+      : 'translate(75px, -50%) rotate(0deg)'};
+  transform-origin: 10% 50%;
   white-space: nowrap;
   color: #000;
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 0.9rem;
   z-index: 1;
   text-align: center;
   width: 80px;
