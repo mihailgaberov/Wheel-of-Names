@@ -52,29 +52,30 @@ const Sector = styled.div<{
   width: 100%;
   height: 100%;
   clip-path: ${({ sectorWidth }) =>
-    `polygon(50% 50%, 100% 135%, 100% ${sectorWidth}%)`};
+    `polygon(50% 50%, 100% 100%, 100% ${sectorWidth}%)`};
   background-color: ${({ color }) => color};
   transform-origin: 50% 50%;
   transform: ${({ angle }) => `rotate(${angle}deg)`};
 `;
 
-const Name = styled.span<{ angle: number; sectorWidth: number }>`
+const Name = styled.span<{ angle: number; numSectors: number }>`
   position: absolute;
   margin: -5px;
-  top: 65%;
+  top: 50%;
   left: 50%;
   transform: ${({ angle }) =>
     angle > 180
-      ? 'translate(120px, -50%) rotate(190deg)'
-      : 'translate(75px, 0) rotate(20deg)'};
+      ? 'translate(120px, 0%) rotate(angle)'
+      : 'translate(75px, 0) rotate(angle)'};
   transform-origin: 20% 50%;
   white-space: nowrap;
   color: #000;
-  font-size: ${({ sectorWidth }) => (sectorWidth < 30 ? '0.6rem' : '0.9rem')};
+  font-size: ${({ numSectors }) => (numSectors < 6 ? '0.9rem' : '0.6rem')};
   z-index: 1;
   text-align: center;
-  width: ${({ sectorWidth }) => (sectorWidth < 30 ? '50px' : '80px')};
+  width: 220px;
 `;
+
 const colors = [
   '#FF5733', // Vibrant orange
   '#FFBD33', // Bright yellow
@@ -101,7 +102,7 @@ const colors = [
   '#FF3366', // Hot pink
 ];
 
-const MAX_SECTORS = 36;
+const MAX_SECTORS = 18;
 
 interface Props {
   participants: string[];
@@ -114,7 +115,10 @@ export const Wheel: FC<Props> = ({ participants }) => {
 
   const numSectors = Math.min(participants.length, MAX_SECTORS);
   const sliceAngle = 360 / numSectors;
-  const sectorWidth = Math.round(360 / numSectors);
+
+  const sectorWidth = 1350 / numSectors;
+
+  console.log('sectorWidth', sectorWidth);
 
   // Generate colors ensuring no two adjacent sectors are the same
   const getColor = (index: number) => {
@@ -155,7 +159,7 @@ export const Wheel: FC<Props> = ({ participants }) => {
                 color={color}
                 sectorWidth={sectorWidth}
               >
-                <Name angle={rotate} sectorWidth={sectorWidth}>
+                <Name angle={rotate} numSectors={numSectors}>
                   {name}
                 </Name>
               </Sector>

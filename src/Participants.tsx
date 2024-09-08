@@ -40,9 +40,9 @@ export const Participants = () => {
         <Button>Sort</Button>
       </ButtonGroup>
       <ul>
-        <ListItem>Participant 1</ListItem>
-        <ListItem>Participant 2</ListItem>
-        <ListItem>Participant 3</ListItem>
+        <ListItem>Mihail</ListItem>
+        <ListItem>Xavi</ListItem>
+        <ListItem>Alejandro</ListItem>
       </ul>
     </Section>
   );

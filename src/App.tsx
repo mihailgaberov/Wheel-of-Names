@@ -36,13 +36,24 @@ function App() {
         <Participants />
         <Wheel
           participants={[
-            'Mihail',
-            'Xavi',
-            'Ale',
-            'Javi',
-            'Alex',
-            'Sara',
-            'Jorge',
+            '1. Mihail',
+            '2. Xavi',
+            '3. Ale',
+            '4. Javi',
+            '5. Alex',
+            '6. Sara',
+            '7. Jorge',
+            '8. Mihail',
+            '9. Marta',
+            '10. Jose',
+            '11. Juan',
+            '12. David',
+            '13. Miguel',
+            '14. Alma',
+            '15. Alba',
+            '16. Toni',
+            '17. Pedro',
+            '18. Maria',
           ]}
         />
       </Main>
