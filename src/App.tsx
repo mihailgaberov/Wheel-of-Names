@@ -19,6 +19,12 @@ const Main = styled.main`
   display: flex;
   justify-content: space-around;
   padding: 20px;
+
+  // This is a media query that will apply the styles only if the screen width is less than 768px
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 `;
 
 function App() {

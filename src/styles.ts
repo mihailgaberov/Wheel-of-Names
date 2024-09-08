@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 export const Section = styled.section`
   width: 40%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const Button = styled.button`

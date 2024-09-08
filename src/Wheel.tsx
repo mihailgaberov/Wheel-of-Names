@@ -57,12 +57,15 @@ const Name = styled.span<{ angle: number }>`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: ${({ angle }) => `rotate(${-angle}deg) translate(90px)`};
-  transform-origin: 0 0;
+  transform: translate(75px, -30%) rotate(${({ angle }) => -angle}deg);
+  transform-origin: center;
   white-space: nowrap;
   color: #000;
   font-size: 1rem;
   font-weight: bold;
+  z-index: 1;
+  text-align: center;
+  width: 80px;
 `;
 
 interface Props {
