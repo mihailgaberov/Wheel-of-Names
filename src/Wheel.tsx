@@ -110,7 +110,7 @@ interface Props {
 }
 
 export const Wheel: FC<Props> = ({ participants }) => {
-  const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
+  const [setSelectedIndex] = useState<null | number>(null);
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
 
