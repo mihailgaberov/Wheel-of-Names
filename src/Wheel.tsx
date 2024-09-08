@@ -110,7 +110,7 @@ interface Props {
 }
 
 export const Wheel: FC<Props> = ({ participants }) => {
-  const [setSelectedIndex] = useState<null | number>(null);
+  // const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
 
@@ -139,9 +139,9 @@ export const Wheel: FC<Props> = ({ participants }) => {
 
     setTimeout(() => {
       setSpinning(false);
-      const finalRotation = randomAngle % 360;
-      const selectedSlice = Math.floor(finalRotation / sliceAngle);
-      setSelectedIndex(numSectors - selectedSlice - 1);
+      // const finalRotation = randomAngle % 360;
+      // const selectedSlice = Math.floor(finalRotation / sliceAngle);
+      // setSelectedIndex(numSectors - selectedSlice - 1);
     }, 5000);
   };
 
