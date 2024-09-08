@@ -60,20 +60,21 @@ const Sector = styled.div<{
 
 const Name = styled.span<{ angle: number; numSectors: number }>`
   position: absolute;
-  margin: -5px;
   top: 50%;
   left: 50%;
   transform: ${({ angle }) =>
     angle > 180
-      ? 'translate(120px, 0%) rotate(angle)'
-      : 'translate(75px, 0) rotate(angle)'};
-  transform-origin: 20% 50%;
+      ? 'translate(120px, -50%) rotate(180deg)'
+      : 'translate(75px, -50%) rotate(0deg)'};
+  transform-origin: 10% 50%;
   white-space: nowrap;
   color: #000;
-  font-size: ${({ numSectors }) => (numSectors < 6 ? '0.9rem' : '0.6rem')};
-  z-index: 1;
+  font-size: 0.9rem;
+  z-index: 2222;
   text-align: center;
-  width: 220px;
+  width: 80px;
+  border: 1px solid #000;
+  background-color: #fff;
 `;
 
 const colors = [
