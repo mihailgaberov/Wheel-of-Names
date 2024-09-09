@@ -23,8 +23,8 @@ const WinnerIndicator = styled.div`
   position: absolute;
   width: 0;
   height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
   border-bottom: 20px solid red;
   top: 50%;
   left: 100%;
