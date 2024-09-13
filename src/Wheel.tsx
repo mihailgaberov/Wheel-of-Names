@@ -69,7 +69,7 @@ const Name = styled.span<{ angle: number; numSectors: number }>`
   transform-origin: 10% 50%;
   white-space: nowrap;
   color: #000;
-  font-size: 0.9rem;
+  font-size: 0.9em;
   z-index: 2222;
   text-align: center;
   width: 80px;
