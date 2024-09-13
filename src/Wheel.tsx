@@ -49,32 +49,30 @@ const Sector = styled.div<{
   sectorWidth: number;
 }>`
   position: absolute;
-  width: 100%;
+  width: 50%;
   height: 100%;
-  clip-path: ${({ sectorWidth }) =>
-    `polygon(50% 50%, 100% 100%, 100% ${sectorWidth}%)`};
+  clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
   background-color: ${({ color }) => color};
-  transform-origin: 50% 50%;
+  transform-origin: 100% 50%;
   transform: ${({ angle }) => `rotate(${angle}deg)`};
 `;
 
-const Name = styled.span<{ angle: number; numSectors: number }>`
+const Name = styled.span<{ angle: number }>`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: ${({ angle }) =>
-    angle > 180
-      ? 'translate(120px, -50%) rotate(180deg)'
-      : 'translate(75px, -50%) rotate(0deg)'};
-  transform-origin: 10% 50%;
+    `rotate(${angle}deg) translate(120px, -50%)`}; /* Adjust position and rotate */
+  // transform-origin: 0% 50%; /* Rotate around center */
   white-space: nowrap;
   color: #000;
   font-size: 0.9em;
-  z-index: 2222;
+  z-index: 10; /* Make sure it's above the sectors */
   text-align: center;
-  width: 80px;
-  border: 1px solid #000;
   background-color: #fff;
+  padding: 2px 4px;
+  border-radius: 4px;
+  border: 1px solid #000;
 `;
 
 const colors = [
@@ -110,26 +108,16 @@ interface Props {
 }
 
 export const Wheel: FC<Props> = ({ participants }) => {
-  // const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
 
   const numSectors = Math.min(participants.length, MAX_SECTORS);
   const sliceAngle = 360 / numSectors;
-
   const sectorWidth = 1350 / numSectors;
 
-  console.log('sectorWidth', sectorWidth);
-
-  // Generate colors ensuring no two adjacent sectors are the same
   const getColor = (index: number) => {
     const colorIndex = index % colors.length;
-    const prevColorIndex = (index - 1 + colors.length) % colors.length;
-    return colors[
-      colorIndex === prevColorIndex
-        ? (colorIndex + 1) % colors.length
-        : colorIndex
-    ];
+    return colors[colorIndex];
   };
 
   const startSpin = () => {
@@ -139,9 +127,6 @@ export const Wheel: FC<Props> = ({ participants }) => {
 
     setTimeout(() => {
       setSpinning(false);
-      // const finalRotation = randomAngle % 360;
-      // const selectedSlice = Math.floor(finalRotation / sliceAngle);
-      // setSelectedIndex(numSectors - selectedSlice - 1);
     }, 5000);
   };
 
@@ -150,7 +135,7 @@ export const Wheel: FC<Props> = ({ participants }) => {
       <h2>Wheel</h2>
       <WheelContainer>
         <CircleContainer rotation={rotation}>
-          {participants.slice(0, numSectors).map((name, i) => {
+          {participants.slice(0, numSectors).map((_, i) => {
             const rotate = i * sliceAngle;
             const color = getColor(i);
             return (
@@ -159,11 +144,16 @@ export const Wheel: FC<Props> = ({ participants }) => {
                 angle={rotate}
                 color={color}
                 sectorWidth={sectorWidth}
-              >
-                <Name angle={rotate} numSectors={numSectors}>
-                  {name}
-                </Name>
-              </Sector>
+              />
+            );
+          })}
+          {/* Render names separately so they're not clipped by sectors */}
+          {participants.slice(0, numSectors).map((name, i) => {
+            const rotate = i * sliceAngle;
+            return (
+              <Name key={i} angle={rotate}>
+                {name}
+              </Name>
             );
           })}
         </CircleContainer>
