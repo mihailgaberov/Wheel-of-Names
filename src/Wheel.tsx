@@ -46,13 +46,13 @@ const CircleContainer = styled.div<{ rotation: number }>`
 const Sector = styled.div<{
   angle: number;
   color: string;
-  sectorWidth?: number;
+  sectorwidth: number;
 }>`
   position: absolute;
   width: 100%;
   height: 100%;
-  clip-path: ${({ sectorWidth }) =>
-    `polygon(50% 50%, 100% 100%, 100% ${sectorWidth}%)`};
+  clip-path: ${({ sectorwidth }) =>
+    `polygon(50% 50%, 100% 100%, 100% ${sectorwidth}%)`};
   background-color: ${({ color }) => color};
   transform-origin: 50% 50%;
   transform: ${({ angle }) => `rotate(${angle}deg)`};
@@ -62,7 +62,7 @@ const Name = styled.span<{ angle: number }>`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: ${({ angle }) => `rotate(${angle}deg) translate(90px, 90%)`};
+  transform: ${({ angle }) => `rotate(${angle}deg) translate(75px, 50%)`};
   transform-origin: 0% 0%;
   white-space: nowrap;
   color: white;
@@ -71,34 +71,32 @@ const Name = styled.span<{ angle: number }>`
   text-align: center;
   padding: 2px 4px;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
 `;
 
 const colors = [
-  '#FF5733', // Vibrant orange
-  '#FFBD33', // Bright yellow
-  '#DBFF33', // Light green-yellow
-  '#75FF33', // Bright green
-  '#33FF57', // Bright teal-green
-  '#33FFBD', // Turquoise
-  '#33A1FF', // Sky blue
-  '#3357FF', // Bright blue
-  '#5733FF', // Purple
-  '#BD33FF', // Violet
-  '#FF33A1', // Hot pink
-  '#FF3333', // Red
-  '#FF6F33', // Coral
-  '#FFB833', // Gold
-  '#DFFF33', // Lime green
-  '#7DFF33', // Olive green
-  '#33FF77', // Mint green
-  '#33FFB3', // Pale turquoise
-  '#33B2FF', // Deep sky blue
-  '#5C33FF', // Royal blue
-  '#A533FF', // Medium purple
-  '#FF33B5', // Fuchsia
-  '#FF3366', // Hot pink
+  '#CC4629', // Darker vibrant orange
+  '#CC9A29', // Darker bright yellow
+  '#B2CC29', // Darker light green-yellow
+  '#5ECC29', // Darker bright green
+  '#29CC46', // Darker bright teal-green
+  '#29CC99', // Darker turquoise
+  '#2985CC', // Darker sky blue
+  '#293FCC', // Darker bright blue
+  '#4629CC', // Darker purple
+  '#9929CC', // Darker violet
+  '#CC2981', // Darker hot pink
+  '#CC2929', // Darker red
+  '#CC5929', // Darker coral
+  '#CC9529', // Darker gold
+  '#B2CC29', // Darker lime green
+  '#66CC29', // Darker olive green
+  '#29CC5F', // Darker mint green
+  '#29CC91', // Darker pale turquoise
+  '#298ECC', // Darker deep sky blue
+  '#4A29CC', // Darker royal blue
+  '#8429CC', // Darker medium purple
+  '#CC298F', // Darker fuchsia
+  '#CC294F', // Darker hot pink
 ];
 
 const MAX_SECTORS = 18;
@@ -143,7 +141,7 @@ export const Wheel: FC<Props> = ({ participants }) => {
                 key={i}
                 angle={rotate}
                 color={color}
-                sectorWidth={sectorWidth}
+                sectorwidth={sectorWidth}
               />
             );
           })}
@@ -152,7 +150,7 @@ export const Wheel: FC<Props> = ({ participants }) => {
             const rotate = i * sliceAngle;
             return (
               <Name key={i} angle={rotate}>
-                {name}
+                <i>{name}</i>
               </Name>
             );
           })}
