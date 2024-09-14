@@ -109,9 +109,8 @@ export const Wheel: FC<Props> = ({ participants }) => {
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
 
-  const numSectors = Math.min(participants.length, MAX_SECTORS);
-  const sliceAngle = 360 / numSectors;
-  const sectorWidth = 1350 / numSectors;
+  const sliceAngle = 360 / MAX_SECTORS;
+  const sectorWidth = 1350 / MAX_SECTORS;
 
   const getColor = (index: number) => {
     const colorIndex = index % colors.length;
@@ -133,7 +132,8 @@ export const Wheel: FC<Props> = ({ participants }) => {
       <h2>Wheel</h2>
       <WheelContainer>
         <CircleContainer rotation={rotation}>
-          {participants.slice(0, numSectors).map((_, i) => {
+          {Array.from({ length: MAX_SECTORS }).map((_, i) => {
+            console.log(i);
             const rotate = i * sliceAngle;
             const color = getColor(i);
             return (
@@ -146,7 +146,7 @@ export const Wheel: FC<Props> = ({ participants }) => {
             );
           })}
           {/* Render names separately so they're not clipped by sectors */}
-          {participants.slice(0, numSectors).map((name, i) => {
+          {participants.slice(0, MAX_SECTORS).map((name, i) => {
             const rotate = i * sliceAngle;
             return (
               <Name key={i} angle={rotate}>
