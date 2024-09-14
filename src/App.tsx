@@ -1,13 +1,11 @@
 import styled from 'styled-components';
-import { atom, useAtom, Provider } from 'jotai';
-import { DevTools } from 'jotai-devtools';
+import { atom, useAtom } from 'jotai';
 
 import { Participants } from './Participants';
 import { MAX_SECTORS, Wheel } from './Wheel';
 import { Question } from './Questsion';
 
 import './App.css';
-import { useState } from 'react';
 
 const Header = styled.header`
   background-color: #282c34;
@@ -45,17 +43,16 @@ function App() {
   };
 
   return (
-    <Provider>
-      <DevTools />
+    <>
       <Header>
         <h1>Wheel of Names</h1>
       </Header>
       <Question />
       <Main>
-        <Participants handleAddName={handleAddName} />
+        <Participants handleAddName={handleAddName} names={names} />
         <Wheel participants={names} />
       </Main>
-    </Provider>
+    </>
   );
 }
 

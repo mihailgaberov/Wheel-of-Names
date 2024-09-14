@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Section, Button, Input } from './styles';
 import { FC, useState } from 'react';
+import { useAtom } from 'jotai';
 
 const ListItem = styled.li`
   padding: 10px;
@@ -24,9 +25,13 @@ const ButtonGroup = styled.div`
 
 interface ParticipantsProps {
   handleAddName: (name: string) => void;
+  names: string[];
 }
 
-export const Participants: FC<ParticipantsProps> = ({ handleAddName }) => {
+export const Participants: FC<ParticipantsProps> = ({
+  handleAddName,
+  names,
+}) => {
   const [participant, setParticipant] = useState('');
 
   return (
@@ -39,19 +44,30 @@ export const Participants: FC<ParticipantsProps> = ({ handleAddName }) => {
         onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
           if (e.key === 'Enter') {
             handleAddName(participant);
+            setParticipant('');
           }
         }}
       />
-      <Button onClick={() => handleAddName(participant)}>Add</Button>
+      <Button
+        onClick={() => {
+          handleAddName(participant);
+          setParticipant('');
+        }}
+      >
+        Add
+      </Button>
       <h2>Participants</h2>
       <ButtonGroup>
         <Button>Shuffle</Button>
         <Button>Sort</Button>
       </ButtonGroup>
       <ul>
-        <ListItem>Mihail</ListItem>
+        {names.map((name, index) => (
+          <ListItem key={index}>{name}</ListItem>
+        ))}
+        {/* <ListItem>Mihail</ListItem>
         <ListItem>Xavi</ListItem>
-        <ListItem>Alejandro</ListItem>
+        <ListItem>Alejandro</ListItem> */}
       </ul>
     </Section>
   );
