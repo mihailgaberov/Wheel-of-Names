@@ -99,7 +99,7 @@ const colors = [
   '#CC294F', // Darker hot pink
 ];
 
-const MAX_SECTORS = 18;
+export const MAX_SECTORS = 18;
 
 interface Props {
   participants: string[];

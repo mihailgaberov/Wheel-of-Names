@@ -1,9 +1,13 @@
-import './App.css';
-
 import styled from 'styled-components';
+import { atom, useAtom, Provider } from 'jotai';
+import { DevTools } from 'jotai-devtools';
+
 import { Participants } from './Participants';
-import { Wheel } from './Wheel';
+import { MAX_SECTORS, Wheel } from './Wheel';
 import { Question } from './Questsion';
+
+import './App.css';
+import { useState } from 'react';
 
 const Header = styled.header`
   background-color: #282c34;
@@ -27,39 +31,31 @@ const Main = styled.main`
   }
 `;
 
+const namesAtom = atom<string[]>([]);
+
 function App() {
+  const [names, setNames] = useAtom<string[]>(namesAtom);
+
+  const handleAddName = (name: string) => {
+    if (names.length < MAX_SECTORS) {
+      setNames([...names, name]);
+    }
+
+    console.log('>>> names: ', names);
+  };
+
   return (
-    <>
+    <Provider>
+      <DevTools />
       <Header>
         <h1>Wheel of Names</h1>
       </Header>
       <Question />
       <Main>
-        <Participants />
-        <Wheel
-          participants={[
-            'Mihail',
-            'Xavi',
-            // 'Ale',
-            // 'Javi',
-            // 'Alex',
-            // 'Sara',
-            // 'Jorge',
-            // 'Mihail',
-            'Marta',
-            'Jose',
-            // 'Juan',
-            // 'David',
-            // 'Miguel',
-            // 'Alma',
-            'Alba',
-            'Toni',
-            // 'Pedro',
-            'Maria',
-          ]}
-        />
+        <Participants handleAddName={handleAddName} />
+        <Wheel participants={names} />
       </Main>
-    </>
+    </Provider>
   );
 }
 
