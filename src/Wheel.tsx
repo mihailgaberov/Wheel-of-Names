@@ -61,15 +61,13 @@ const Name = styled.span<{ angle: number }>`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: ${({ angle }) =>
-    `rotate(${angle}deg) translate(120px, -50%)`}; /* Adjust position and rotate */
-  // transform-origin: 0% 50%; /* Rotate around center */
+  transform: ${({ angle }) => `rotate(${angle}deg) translate(90px, 90%)`};
+  transform-origin: 0% 0%;
   white-space: nowrap;
   color: #000;
   font-size: 0.9em;
-  z-index: 10; /* Make sure it's above the sectors */
+  z-index: 10;
   text-align: center;
-  background-color: #fff;
   padding: 2px 4px;
   border-radius: 4px;
   border: 1px solid #000;
