@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 import { Section, Button, Input } from './styles';
 import { FC, useState } from 'react';
-import { useAtom } from 'jotai';
+
 import { MAX_SECTORS } from './Wheel';
 
+const ListItemContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const ListItem = styled.li`
+  width: 100%;
   padding: 10px;
   margin: 5px;
   background-color: #f9f9f9;
@@ -30,11 +36,13 @@ const ErrorMessage = styled.p`
 
 interface ParticipantsProps {
   handleAddName: (name: string) => void;
+  handleRemoveName: (index: number) => void;
   names: string[];
 }
 
 export const Participants: FC<ParticipantsProps> = ({
   handleAddName,
+  handleRemoveName,
   names,
 }) => {
   const [participant, setParticipant] = useState('');
@@ -75,11 +83,11 @@ export const Participants: FC<ParticipantsProps> = ({
       </ButtonGroup>
       <ul>
         {names.map((name, index) => (
-          <ListItem key={index}>{name}</ListItem>
+          <ListItemContainer key={index}>
+            <ListItem>{name}</ListItem>
+            <Button onClick={() => handleRemoveName(index)}>Del</Button>
+          </ListItemContainer>
         ))}
-        {/* <ListItem>Mihail</ListItem>
-        <ListItem>Xavi</ListItem>
-        <ListItem>Alejandro</ListItem> */}
       </ul>
     </Section>
   );

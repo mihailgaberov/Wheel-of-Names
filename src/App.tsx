@@ -42,6 +42,10 @@ function App() {
     console.log('>>> names: ', names);
   };
 
+  const handleRemoveName = (index: number) => {
+    setNames(names.filter((_, i) => i !== index));
+  };
+
   return (
     <>
       <Header>
@@ -49,7 +53,11 @@ function App() {
       </Header>
       <Question />
       <Main>
-        <Participants handleAddName={handleAddName} names={names} />
+        <Participants
+          handleAddName={handleAddName}
+          handleRemoveName={handleRemoveName}
+          names={names}
+        />
         <Wheel participants={names} />
       </Main>
     </>
