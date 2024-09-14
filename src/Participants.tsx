@@ -37,12 +37,16 @@ const ErrorMessage = styled.p`
 interface ParticipantsProps {
   handleAddName: (name: string) => void;
   handleRemoveName: (index: number) => void;
+  shuffleNames: () => void;
+  sortNames: () => void;
   names: string[];
 }
 
 export const Participants: FC<ParticipantsProps> = ({
   handleAddName,
   handleRemoveName,
+  shuffleNames,
+  sortNames,
   names,
 }) => {
   const [participant, setParticipant] = useState('');
@@ -78,8 +82,8 @@ export const Participants: FC<ParticipantsProps> = ({
       </Button>
       <h2>Participants</h2>
       <ButtonGroup>
-        <Button>Shuffle</Button>
-        <Button>Sort</Button>
+        <Button onClick={shuffleNames}>Shuffle</Button>
+        <Button onClick={sortNames}>Sort</Button>
       </ButtonGroup>
       <ul>
         {names.map((name, index) => (

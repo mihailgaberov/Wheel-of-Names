@@ -38,12 +38,20 @@ function App() {
     if (names.length < MAX_SECTORS) {
       setNames([...names, name]);
     }
-
-    console.log('>>> names: ', names);
   };
 
   const handleRemoveName = (index: number) => {
     setNames(names.filter((_, i) => i !== index));
+  };
+
+  const shuffleNames = () => {
+    const shuffledNames = [...names].sort(() => Math.random() - 0.5);
+    setNames(shuffledNames);
+  };
+
+  const sortNames = () => {
+    const sortedNames = [...names].sort((a, b) => a.localeCompare(b));
+    setNames(sortedNames);
   };
 
   return (
@@ -56,6 +64,8 @@ function App() {
         <Participants
           handleAddName={handleAddName}
           handleRemoveName={handleRemoveName}
+          shuffleNames={shuffleNames}
+          sortNames={sortNames}
           names={names}
         />
         <Wheel participants={names} />
