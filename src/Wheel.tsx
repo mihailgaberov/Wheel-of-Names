@@ -46,14 +46,15 @@ const CircleContainer = styled.div<{ rotation: number }>`
 const Sector = styled.div<{
   angle: number;
   color: string;
-  sectorWidth: number;
+  sectorWidth?: number;
 }>`
   position: absolute;
-  width: 50%;
+  width: 100%;
   height: 100%;
-  clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+  clip-path: ${({ sectorWidth }) =>
+    `polygon(50% 50%, 100% 100%, 100% ${sectorWidth}%)`};
   background-color: ${({ color }) => color};
-  transform-origin: 100% 50%;
+  transform-origin: 50% 50%;
   transform: ${({ angle }) => `rotate(${angle}deg)`};
 `;
 
@@ -134,7 +135,7 @@ export const Wheel: FC<Props> = ({ participants }) => {
       <h2>Wheel</h2>
       <WheelContainer>
         <CircleContainer rotation={rotation}>
-          {participants.slice(0, numSectors / 2).map((_, i) => {
+          {participants.slice(0, numSectors).map((_, i) => {
             const rotate = i * sliceAngle;
             const color = getColor(i);
             return (
