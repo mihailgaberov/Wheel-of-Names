@@ -14,7 +14,7 @@ For this challenge you’ll be building your own Wheel of Names. It could be a d
 
 Here’s an example wheel of names for several of the past coding challenges:
 
-/img/wheel.png
+[wheel](https://github.com/mihailgaberov/Wheel-of-Names/blob/main/public/img/wheel.png)
 
 Step Zero
 In this step you decide which programming language and IDE you’re going to use and you get yourself setup with a nice new project.
@@ -35,7 +35,7 @@ The text for the name should fit in the segment and each segment should be a dif
 Step 4
 In this step your goal is to allow the user to spin the wheel, animate it spinning and slowing down. Then display a winner, much like below:
 
-/img/wheel-win.png
+[wheel win](https://github.com/mihailgaberov/Wheel-of-Names/blob/main/public/img/wheel-win.png)
 
 Step 5
 In this step your goal is to support an advanced mode where the user can specify the colour and the size of each segment.
