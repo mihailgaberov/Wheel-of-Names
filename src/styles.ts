@@ -35,3 +35,33 @@ export const Input = styled.input`
   margin: 0.5rem;
   width: 60%;
 `;
+
+export const EditableWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  justify-content: center;
+
+  &:hover {
+    background-color: #f0f0f0;
+    color: black;
+  }
+
+  h1 {
+    margin: 0;
+    padding-right: 10px;
+  }
+`;
+
+export const EditIcon = styled.div`
+  font-size: 20px;
+  color: gray;
+  margin-left: 8px;
+  opacity: 0.8;
+
+  ${EditableWrapper}:hover & {
+    color: black;
+  }
+`;

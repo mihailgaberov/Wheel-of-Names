@@ -52,6 +52,7 @@ export const Participants: FC<ParticipantsProps> = ({
   const [participant, setParticipant] = useState('');
 
   const isMaxParticipantsReached = names.length >= MAX_SECTORS;
+  const hasParticipants = names.length > 0;
 
   return (
     <Section>
@@ -82,8 +83,12 @@ export const Participants: FC<ParticipantsProps> = ({
       </Button>
       <h2>Participants</h2>
       <ButtonGroup>
-        <Button onClick={shuffleNames}>Shuffle</Button>
-        <Button onClick={sortNames}>Sort</Button>
+        <Button onClick={shuffleNames} disabled={!hasParticipants}>
+          Shuffle
+        </Button>
+        <Button onClick={sortNames} disabled={!hasParticipants}>
+          Sort
+        </Button>
       </ButtonGroup>
       <ul>
         {names.map((name, index) => (

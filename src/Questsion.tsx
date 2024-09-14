@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { Input } from './styles';
+import { Input, EditableWrapper, EditIcon } from './styles';
+import { FiEdit } from 'react-icons/fi'; // Edit icon from react-icons
 
 export const Question = () => {
   const [question, setQuestion] = useState('What is your question?');
   const [editable, setEditable] = useState(false);
 
   const handleClick = () => {
-    setEditable(true);
-  };
-
-  const handleFocus = () => {
     setEditable(true);
   };
 
@@ -31,11 +28,15 @@ export const Question = () => {
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           onBlur={handleBlur}
-          onFocus={handleFocus}
           onKeyDown={handleKeyDown}
         />
       ) : (
-        <h1 onClick={handleClick}>{question}</h1>
+        <EditableWrapper onClick={handleClick}>
+          <h1>{question}</h1>
+          <EditIcon>
+            <FiEdit />
+          </EditIcon>
+        </EditableWrapper>
       )}
     </div>
   );
