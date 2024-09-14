@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Section, Button, Input } from './styles';
 import { FC, useState } from 'react';
 import { useAtom } from 'jotai';
+import { MAX_SECTORS } from './Wheel';
 
 const ListItem = styled.li`
   padding: 10px;
@@ -23,6 +24,10 @@ const ButtonGroup = styled.div`
   }
 `;
 
+const ErrorMessage = styled.p`
+  color: red;
+`;
+
 interface ParticipantsProps {
   handleAddName: (name: string) => void;
   names: string[];
@@ -34,10 +39,13 @@ export const Participants: FC<ParticipantsProps> = ({
 }) => {
   const [participant, setParticipant] = useState('');
 
+  const isMaxParticipantsReached = names.length >= MAX_SECTORS;
+
   return (
     <Section>
       <h2>Add Participants</h2>
       <Input
+        disabled={isMaxParticipantsReached}
         type="text"
         value={participant}
         onChange={(e) => setParticipant(e.target.value)}
@@ -48,7 +56,11 @@ export const Participants: FC<ParticipantsProps> = ({
           }
         }}
       />
+      {isMaxParticipantsReached && (
+        <ErrorMessage>Max participants reached.</ErrorMessage>
+      )}
       <Button
+        disabled={isMaxParticipantsReached}
         onClick={() => {
           handleAddName(participant);
           setParticipant('');
