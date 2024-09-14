@@ -127,6 +127,8 @@ export const Wheel: FC<Props> = ({ participants }) => {
     }, 5000);
   };
 
+  const hasParticipants = participants.length > 0;
+
   return (
     <Section>
       <h2>Wheel</h2>
@@ -156,7 +158,7 @@ export const Wheel: FC<Props> = ({ participants }) => {
         </CircleContainer>
         <WinnerIndicator />
       </WheelContainer>
-      <Button onClick={startSpin} disabled={spinning}>
+      <Button onClick={startSpin} disabled={spinning || !hasParticipants}>
         Spin
       </Button>
     </Section>
