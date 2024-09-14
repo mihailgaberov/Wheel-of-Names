@@ -64,13 +64,14 @@ const Name = styled.span<{ angle: number }>`
   transform: ${({ angle }) => `rotate(${angle}deg) translate(90px, 90%)`};
   transform-origin: 0% 0%;
   white-space: nowrap;
-  color: #000;
+  color: white;
   font-size: 0.9em;
   z-index: 10;
   text-align: center;
   padding: 2px 4px;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.3);
   border-radius: 4px;
-  border: 1px solid #000;
 `;
 
 const colors = [
@@ -133,7 +134,7 @@ export const Wheel: FC<Props> = ({ participants }) => {
       <h2>Wheel</h2>
       <WheelContainer>
         <CircleContainer rotation={rotation}>
-          {participants.slice(0, numSectors).map((_, i) => {
+          {participants.slice(0, numSectors / 2).map((_, i) => {
             const rotate = i * sliceAngle;
             const color = getColor(i);
             return (
