@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Section, Button } from './styles';
+import { Section, Button, Input } from './styles';
 
 const ListItem = styled.li`
   padding: 10px;
@@ -10,13 +10,6 @@ const ListItem = styled.li`
   color: #282c34;
   font-weight: bold;
   font-size: 1rem;
-`;
-
-const Input = styled.input`
-  padding: 0.8rem;
-  font-size: 1.2rem;
-  margin: 0.5rem;
-  width: 60%;
 `;
 
 const ButtonGroup = styled.div`

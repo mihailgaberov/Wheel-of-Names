@@ -3,6 +3,7 @@ import './App.css';
 import styled from 'styled-components';
 import { Participants } from './Participants';
 import { Wheel } from './Wheel';
+import { Question } from './Questsion';
 
 const Header = styled.header`
   background-color: #282c34;
@@ -32,6 +33,7 @@ function App() {
       <Header>
         <h1>Wheel of Names</h1>
       </Header>
+      <Question />
       <Main>
         <Participants />
         <Wheel

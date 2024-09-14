@@ -133,7 +133,6 @@ export const Wheel: FC<Props> = ({ participants }) => {
       <WheelContainer>
         <CircleContainer rotation={rotation}>
           {Array.from({ length: MAX_SECTORS }).map((_, i) => {
-            console.log(i);
             const rotate = i * sliceAngle;
             const color = getColor(i);
             return (

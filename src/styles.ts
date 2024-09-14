@@ -23,3 +23,10 @@ export const Button = styled.button`
     background-color: #61dafb;
   }
 `;
+
+export const Input = styled.input`
+  padding: 0.8rem;
+  font-size: 1.2rem;
+  margin: 0.5rem;
+  width: 60%;
+`;
