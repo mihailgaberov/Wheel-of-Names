@@ -1,7 +1,6 @@
 # Wheel of Names
 
-Build Your Own Wheel of Names
-This challenge is to build your own version of Wheel of Names.
+## Build Your Own Wheel of Names
 
 It’s an app, that I presume is inspired by the TV show Wheel of Fortune. In the TV show contestants win prizes for successfully answering question and the Wheel is spun to determine what prize they win.
 
@@ -14,7 +13,7 @@ For this challenge you’ll be building your own Wheel of Names. It could be a d
 
 Here’s an example wheel of names for several of the past coding challenges:
 
-[wheel](https://github.com/mihailgaberov/Wheel-of-Names/blob/main/public/img/wheel.png)
+![wheel](https://github.com/mihailgaberov/Wheel-of-Names/blob/main/public/img/wheel.png)
 
 Step Zero
 In this step you decide which programming language and IDE you’re going to use and you get yourself setup with a nice new project.
@@ -35,7 +34,7 @@ The text for the name should fit in the segment and each segment should be a dif
 Step 4
 In this step your goal is to allow the user to spin the wheel, animate it spinning and slowing down. Then display a winner, much like below:
 
-[wheel win](https://github.com/mihailgaberov/Wheel-of-Names/blob/main/public/img/wheel-win.png)
+![wheel win](https://github.com/mihailgaberov/Wheel-of-Names/blob/main/public/img/wheel-win.png)
 
 Step 5
 In this step your goal is to support an advanced mode where the user can specify the colour and the size of each segment.
@@ -46,3 +45,5 @@ Here are some ideas on how to take this further:
 Deploy it!
 Allow users to save wheels and share / return to them.
 Provide the wheel of names via a Discord bot - see the build your own Discord bot coding challenge to learn more about building Discord bots.
+
+Source: https://codingchallenges.fyi/challenges/challenge-wheel/
