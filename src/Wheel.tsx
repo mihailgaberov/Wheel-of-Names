@@ -52,7 +52,7 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
       ctx.textBaseline = 'middle';
       ctx.fillStyle = 'white';
       ctx.font = '16px Arial';
-      ctx.fillText(participants[i] || '', radius * 0.5, 0);
+      ctx.fillText(capitalize(participants[i]) || '', radius * 0.5, 0);
       ctx.restore();
     }
 
