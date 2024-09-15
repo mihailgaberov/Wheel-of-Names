@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { atom, useAtom } from 'jotai';
 
 import { Participants } from './Participants';
-import { MAX_SECTORS, Wheel } from './Wheel';
 import { Question } from './Questsion';
+import { Wheel } from './Wheel';
 
 import './App.css';
+import { useState } from 'react';
 
 const Header = styled.header`
   background-color: #282c34;
@@ -31,10 +31,8 @@ const Main = styled.main`
 
 export const MAX_PARTICIPANTS = 18;
 
-const namesAtom = atom<string[]>([]);
-
 function App() {
-  const [names, setNames] = useAtom<string[]>(namesAtom);
+  const [names, setNames] = useState<string[]>([]);
 
   const handleAddName = (name: string) => {
     if (names.length < MAX_PARTICIPANTS) {
