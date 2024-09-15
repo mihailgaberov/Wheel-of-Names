@@ -3,6 +3,7 @@ import { Section, Button, Input } from './styles';
 import { FC, useState } from 'react';
 
 import { MAX_PARTICIPANTS } from './App';
+import { capitalize } from './utils';
 
 const ListItemContainer = styled.div`
   display: flex;
@@ -93,7 +94,7 @@ export const Participants: FC<ParticipantsProps> = ({
       <ul>
         {names.map((name, index) => (
           <ListItemContainer key={index}>
-            <ListItem>{name}</ListItem>
+            <ListItem>{capitalize(name)}</ListItem>
             <Button onClick={() => handleRemoveName(index)}>Del</Button>
           </ListItemContainer>
         ))}

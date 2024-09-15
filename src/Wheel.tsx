@@ -1,4 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { Button } from './styles';
+import { capitalize } from './utils';
 
 interface Props {
   participants: string[];
@@ -8,6 +10,9 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
+  const [spinDirection, setSpinDirection] = useState<
+    'clockwise' | 'counterclockwise'
+  >('clockwise');
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const numSectors = participants.length;
@@ -75,9 +80,12 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
     setSpinning(true);
 
     // Set the number of full rotations and calculate final rotation
-    const numFullRotations = 2.5; // 2.5 full rotations
+    const numFullRotations = 2.5;
     const totalRotation = numFullRotations * 360;
-    const finalRotation = (rotation + totalRotation) % 360;
+    const finalRotation =
+      (rotation +
+        (spinDirection === 'clockwise' ? -totalRotation : totalRotation)) %
+      360;
 
     const spinDuration = 6000; // Duration of the animation
     const easing = (t: number) => {
@@ -92,7 +100,10 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
       const elapsed = time - startTime;
       const t = Math.min(elapsed / spinDuration, 1);
       const easeT = easing(t);
-      const currentRotation = rotation + totalRotation * easeT;
+      const currentRotation =
+        rotation +
+        (spinDirection === 'clockwise' ? -totalRotation : totalRotation) *
+          easeT;
 
       setRotation(currentRotation);
 
@@ -109,9 +120,22 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
 
   const determineWinner = (finalRotation: number) => {
     const sliceAngle = 360 / numSectors;
-    const winningSector = Math.floor((finalRotation % 360) / sliceAngle);
+    const winningSector = Math.floor(
+      ((finalRotation % 360) +
+        (spinDirection === 'clockwise' ? 0 : sliceAngle / 2)) /
+        sliceAngle,
+    );
     setWinnerIndex(winningSector);
   };
+
+  const changeSpinDirection = () => {
+    if (spinDirection === 'clockwise') {
+      setSpinDirection('counterclockwise');
+    } else {
+      setSpinDirection('clockwise');
+    }
+  };
+  console.log(spinDirection);
 
   return (
     <div>
@@ -121,12 +145,18 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
         height={400}
         style={{ borderRadius: '50%', border: '2px solid black' }}
       />
-      <button
+      <Button
+        onClick={changeSpinDirection}
+        disabled={participants.length === 0 || spinning}
+      >
+        {capitalize(spinDirection)}
+      </Button>
+      <Button
         onClick={startSpin}
         disabled={participants.length === 0 || spinning}
       >
         Spin
-      </button>
+      </Button>
       {winnerIndex !== null && (
         <div>
           <h3>Winner: {participants[winnerIndex]}</h3>
