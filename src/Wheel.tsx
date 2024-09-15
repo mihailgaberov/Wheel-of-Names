@@ -1,6 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
+import styled from 'styled-components';
+
 import { Button } from './styles';
 import { capitalize } from './utils';
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+`;
 
 interface Props {
   participants: string[];
@@ -70,7 +79,7 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
     // Clear previous drawing
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.translate(radius, radius);
-    ctx.rotate(-rotation * (Math.PI / 180)); // Rotate canvas for spinning effect
+    ctx.rotate(-rotation * (Math.PI / 180));
 
     // Draw sectors
     for (let i = 0; i < numSectors; i++) {
@@ -80,7 +89,7 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
       ctx.moveTo(0, 0);
       ctx.arc(0, 0, radius, startAngle, endAngle);
       ctx.closePath();
-      const color = darkenColor(colors[i % colors.length], 30); // Darken color
+      const color = darkenColor(colors[i % colors.length], 30);
       ctx.fillStyle = color;
       ctx.fill();
 
@@ -187,18 +196,20 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
         height={400}
         style={{ borderRadius: '50%', border: '2px solid black' }}
       />
-      <Button
-        onClick={changeSpinDirection}
-        disabled={participants.length === 0 || spinning}
-      >
-        {capitalize(spinDirection)}
-      </Button>
-      <Button
-        onClick={startSpin}
-        disabled={participants.length === 0 || spinning}
-      >
-        Spin
-      </Button>
+      <ButtonsContainer>
+        <Button
+          onClick={changeSpinDirection}
+          disabled={participants.length === 0 || spinning}
+        >
+          {capitalize(spinDirection)}
+        </Button>
+        <Button
+          onClick={startSpin}
+          disabled={participants.length === 0 || spinning}
+        >
+          Spin
+        </Button>
+      </ButtonsContainer>
       {winnerIndex !== null && (
         <div>
           <h3>Winner: {participants[winnerIndex]}</h3>
