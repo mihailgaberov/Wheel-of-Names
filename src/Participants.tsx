@@ -51,9 +51,32 @@ export const Participants: FC<ParticipantsProps> = ({
   names,
 }) => {
   const [participant, setParticipant] = useState('');
+  const [error, setError] = useState('');
 
   const isMaxParticipantsReached = names.length >= MAX_PARTICIPANTS;
   const hasParticipants = names.length > 0;
+
+  const validateInput = (name: string) => {
+    const specialCharPattern = /[^a-zA-Z0-9 ]/;
+    if (!name.trim()) {
+      return 'Name cannot be empty.';
+    }
+    if (specialCharPattern.test(name)) {
+      return 'Name cannot contain special characters.';
+    }
+    return '';
+  };
+
+  const handleAddParticipant = () => {
+    const validationError = validateInput(participant);
+    if (validationError) {
+      setError(validationError);
+    } else {
+      handleAddName(participant);
+      setParticipant('');
+      setError('');
+    }
+  };
 
   return (
     <Section>
@@ -61,24 +84,25 @@ export const Participants: FC<ParticipantsProps> = ({
       <Input
         disabled={isMaxParticipantsReached}
         type="text"
+        placeholder="Enter a name"
         value={participant}
         onChange={(e) => setParticipant(e.target.value)}
         onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
           if (e.key === 'Enter') {
-            handleAddName(participant);
-            setParticipant('');
+            // handleAddName(participant);
+            // setParticipant('');
+            handleAddParticipant();
           }
         }}
       />
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+
       {isMaxParticipantsReached && (
         <ErrorMessage>Max participants reached.</ErrorMessage>
       )}
       <Button
         disabled={isMaxParticipantsReached}
-        onClick={() => {
-          handleAddName(participant);
-          setParticipant('');
-        }}
+        onClick={handleAddParticipant}
       >
         Add
       </Button>
