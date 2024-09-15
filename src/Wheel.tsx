@@ -11,7 +11,7 @@ const Popup = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
-  color: #66cc29;
+  color: #006400;
   padding: 1rem 2rem;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -254,7 +254,7 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
       {showPopup && popupWinner && (
         <Popup>
           <h2>Congratulations!</h2>
-          <h3>{popupWinner}</h3>
+          <h3>{capitalize(popupWinner)}</h3>
         </Popup>
       )}
     </div>
