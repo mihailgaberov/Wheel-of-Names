@@ -6,6 +6,32 @@ interface Props {
   participants: string[];
 }
 
+const colors = [
+  '#CC4629', // Darker vibrant orange
+  '#CC9A29', // Darker bright yellow
+  '#B2CC29', // Darker light green-yellow
+  '#5ECC29', // Darker bright green
+  '#29CC46', // Darker bright teal-green
+  '#29CC99', // Darker turquoise
+  '#2985CC', // Darker sky blue
+  '#293FCC', // Darker bright blue
+  '#4629CC', // Darker purple
+  '#9929CC', // Darker violet
+  '#CC2981', // Darker hot pink
+  '#CC2929', // Darker red
+  '#CC5929', // Darker coral
+  '#CC9529', // Darker gold
+  '#B2CC29', // Darker lime green
+  '#66CC29', // Darker olive green
+  '#29CC5F', // Darker mint green
+  '#29CC91', // Darker pale turquoise
+  '#298ECC', // Darker deep sky blue
+  '#4A29CC', // Darker royal blue
+  '#8429CC', // Darker medium purple
+  '#CC298F', // Darker fuchsia
+  '#CC294F', // Darker hot pink
+];
+
 export const Wheel: React.FC<Props> = ({ participants }) => {
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
@@ -22,6 +48,18 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
       drawWheel();
     }
   }, [participants, rotation]);
+
+  const darkenColor = (color: string, amount: number): string => {
+    let r = parseInt(color.slice(1, 3), 16);
+    let g = parseInt(color.slice(3, 5), 16);
+    let b = parseInt(color.slice(5, 7), 16);
+
+    r = Math.max(0, r - amount);
+    g = Math.max(0, g - amount);
+    b = Math.max(0, b - amount);
+
+    return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`;
+  };
 
   const drawWheel = () => {
     const canvas = canvasRef.current!;
@@ -42,7 +80,8 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
       ctx.moveTo(0, 0);
       ctx.arc(0, 0, radius, startAngle, endAngle);
       ctx.closePath();
-      ctx.fillStyle = `hsl(${(i * (360 / numSectors)) % 360}, 100%, 50%)`;
+      const color = darkenColor(colors[i % colors.length], 30); // Darken color
+      ctx.fillStyle = color;
       ctx.fill();
 
       // Draw the name in the sector
@@ -52,6 +91,10 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
       ctx.textBaseline = 'middle';
       ctx.fillStyle = 'white';
       ctx.font = '16px Arial';
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+      ctx.shadowOffsetX = 1;
+      ctx.shadowOffsetY = 1;
+      ctx.shadowBlur = 3;
       ctx.fillText(capitalize(participants[i]) || '', radius * 0.5, 0);
       ctx.restore();
     }
@@ -135,7 +178,6 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
       setSpinDirection('clockwise');
     }
   };
-  console.log(spinDirection);
 
   return (
     <div>
