@@ -132,7 +132,7 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
     setSpinning(true);
 
     // Set the number of full rotations and calculate final rotation
-    const numFullRotations = 2.5;
+    const numFullRotations = Math.random() * 5 + 5; // Between 5 and 10 full rotations
     const totalRotation = numFullRotations * 360;
     const finalRotation =
       (rotation +
@@ -172,11 +172,16 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
 
   const determineWinner = (finalRotation: number) => {
     const sliceAngle = 360 / numSectors;
-    const winningSector = Math.floor(
-      ((finalRotation % 360) +
-        (spinDirection === 'clockwise' ? 0 : sliceAngle / 2)) /
-        sliceAngle,
-    );
+
+    // Normalize final rotation to be within [0, 360)
+    const normalizedRotation = ((finalRotation % 360) + 360) % 360;
+
+    // Calculate the sector index based on the normalized rotation
+    let winningSector = Math.floor(normalizedRotation / sliceAngle);
+
+    // Ensure the index is within valid bounds
+    winningSector = (winningSector + numSectors) % numSectors;
+
     setWinnerIndex(winningSector);
   };
 
