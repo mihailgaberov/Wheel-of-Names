@@ -19,11 +19,11 @@ Wheel of Names is similar, but allows us to create a virtual wheel, putting our 
 
 ### Screenshots
 
-[![Initial screen]](https://github.com/mihailgaberov/Wheel-of-Names/blob/main/screenshots/initial-screen.png)
+![Initial screen](https://github.com/mihailgaberov/Wheel-of-Names/blob/main/screenshots/initial-screen.png)
 
-[![Entering question]](https://github.com/mihailgaberov/Wheel-of-Names/blob/main/screenshots/entering-question.png)
+![Entering question](https://github.com/mihailgaberov/Wheel-of-Names/blob/main/screenshots/entering-question.png)
 
-[![Entering participants]](https://github.com/mihailgaberov/Wheel-of-Names/blob/main/screenshots/entering-participants.png)
+![Entering participants](https://github.com/mihailgaberov/Wheel-of-Names/blob/main/screenshots/entering-participants.png)
 
 [![Winner](https://i9.ytimg.com/vi/sugUnci1Rlw/mqdefault.jpg?v=66e6b99b&sqp=CIDzmrcG-oaymwEmCMACELQB8quKqQMa8AEB-AHqB4AC0AWKAgwIABABGH8gPigTMA8=&rs=AOn4CLB60U8amH1NPaaeZvLY2qT0Biq5lw)](https://youtu.be/sugUnci1Rlw)
 
