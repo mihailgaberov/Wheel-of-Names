@@ -1,8 +1,35 @@
 import React, { useRef, useState, useEffect } from 'react';
+import confetti from 'canvas-confetti';
 import styled from 'styled-components';
 
-import { Button } from './styles';
 import { capitalize } from './utils';
+import { Button } from './styles';
+
+const Popup = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: #66cc29;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  z-index: 1000;
+  animation: popin 1s ease-out;
+
+  @keyframes popin {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+`;
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -44,10 +71,11 @@ const colors = [
 export const Wheel: React.FC<Props> = ({ participants }) => {
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
-  const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
   const [spinDirection, setSpinDirection] = useState<
     'clockwise' | 'counterclockwise'
   >('clockwise');
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupWinner, setPopupWinner] = useState<string | null>(null);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const numSectors = participants.length;
@@ -172,25 +200,33 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
 
   const determineWinner = (finalRotation: number) => {
     const sliceAngle = 360 / numSectors;
-
-    // Normalize final rotation to be within [0, 360)
     const normalizedRotation = ((finalRotation % 360) + 360) % 360;
+    const winningSector = Math.floor(normalizedRotation / sliceAngle);
 
-    // Calculate the sector index based on the normalized rotation
-    let winningSector = Math.floor(normalizedRotation / sliceAngle);
-
-    // Ensure the index is within valid bounds
-    winningSector = (winningSector + numSectors) % numSectors;
-
-    setWinnerIndex(winningSector);
+    setPopupWinner(participants[winningSector]);
+    setShowPopup(true);
   };
 
   const changeSpinDirection = () => {
-    if (spinDirection === 'clockwise') {
-      setSpinDirection('counterclockwise');
-    } else {
-      setSpinDirection('clockwise');
+    setSpinDirection(
+      spinDirection === 'clockwise' ? 'counterclockwise' : 'clockwise',
+    );
+  };
+
+  useEffect(() => {
+    if (showPopup) {
+      startConfetti();
+      const timer = setTimeout(() => setShowPopup(false), 5000); // Hide popup after 5 seconds
+      return () => clearTimeout(timer);
     }
+  }, [showPopup]);
+
+  const startConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
   };
 
   return (
@@ -215,10 +251,11 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
           Spin
         </Button>
       </ButtonsContainer>
-      {winnerIndex !== null && (
-        <div>
-          <h3>Winner: {participants[winnerIndex]}</h3>
-        </div>
+      {showPopup && popupWinner && (
+        <Popup>
+          <h2>Congratulations!</h2>
+          <h3>{popupWinner}</h3>
+        </Popup>
       )}
     </div>
   );
