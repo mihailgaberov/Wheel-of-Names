@@ -29,13 +29,15 @@ const Main = styled.main`
   }
 `;
 
+export const MAX_PARTICIPANTS = 18;
+
 const namesAtom = atom<string[]>([]);
 
 function App() {
   const [names, setNames] = useAtom<string[]>(namesAtom);
 
   const handleAddName = (name: string) => {
-    if (names.length < MAX_SECTORS) {
+    if (names.length < MAX_PARTICIPANTS) {
       setNames([...names, name]);
     }
   };

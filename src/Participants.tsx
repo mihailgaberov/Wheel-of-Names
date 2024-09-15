@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Section, Button, Input } from './styles';
 import { FC, useState } from 'react';
 
-import { MAX_SECTORS } from './Wheel';
+import { MAX_PARTICIPANTS } from './App';
 
 const ListItemContainer = styled.div`
   display: flex;
@@ -51,7 +51,7 @@ export const Participants: FC<ParticipantsProps> = ({
 }) => {
   const [participant, setParticipant] = useState('');
 
-  const isMaxParticipantsReached = names.length >= MAX_SECTORS;
+  const isMaxParticipantsReached = names.length >= MAX_PARTICIPANTS;
   const hasParticipants = names.length > 0;
 
   return (

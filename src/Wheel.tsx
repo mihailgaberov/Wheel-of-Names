@@ -1,166 +1,134 @@
-import { FC, useState } from 'react';
-import styled from 'styled-components';
-import { Button } from './styles';
-
-const Section = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 500px;
-  width: 500px;
-  position: relative;
-`;
-
-const WheelContainer = styled.div`
-  position: relative;
-  width: 300px;
-  height: 300px;
-  margin-bottom: 2rem;
-`;
-
-const WinnerIndicator = styled.div`
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 20px solid red;
-  top: 50%;
-  left: 100%;
-  transform: translate(-50%, -50%) rotate(-90deg);
-  z-index: 10;
-`;
-
-const CircleContainer = styled.div<{ rotation: number }>`
-  position: relative;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  overflow: hidden;
-  transform-origin: center;
-  transition: transform 5s ease-out;
-  transform: ${({ rotation }) => `rotate(${rotation}deg)`};
-`;
-
-const Sector = styled.div<{
-  angle: number;
-  color: string;
-  sectorwidth: number;
-}>`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  clip-path: ${({ sectorwidth }) =>
-    `polygon(50% 50%, 100% 100%, 100% ${sectorwidth}%)`};
-  background-color: ${({ color }) => color};
-  transform-origin: 50% 50%;
-  transform: ${({ angle }) => `rotate(${angle}deg)`};
-`;
-
-const Name = styled.span<{ angle: number }>`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: ${({ angle }) => `rotate(${angle}deg) translate(75px, 50%)`};
-  transform-origin: 0% 0%;
-  white-space: nowrap;
-  color: white;
-  font-size: 0.9em;
-  z-index: 10;
-  text-align: center;
-  padding: 2px 4px;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-`;
-
-const colors = [
-  '#CC4629', // Darker vibrant orange
-  '#CC9A29', // Darker bright yellow
-  '#B2CC29', // Darker light green-yellow
-  '#5ECC29', // Darker bright green
-  '#29CC46', // Darker bright teal-green
-  '#29CC99', // Darker turquoise
-  '#2985CC', // Darker sky blue
-  '#293FCC', // Darker bright blue
-  '#4629CC', // Darker purple
-  '#9929CC', // Darker violet
-  '#CC2981', // Darker hot pink
-  '#CC2929', // Darker red
-  '#CC5929', // Darker coral
-  '#CC9529', // Darker gold
-  '#B2CC29', // Darker lime green
-  '#66CC29', // Darker olive green
-  '#29CC5F', // Darker mint green
-  '#29CC91', // Darker pale turquoise
-  '#298ECC', // Darker deep sky blue
-  '#4A29CC', // Darker royal blue
-  '#8429CC', // Darker medium purple
-  '#CC298F', // Darker fuchsia
-  '#CC294F', // Darker hot pink
-];
-
-export const MAX_SECTORS = 18;
+import React, { useRef, useState, useEffect } from 'react';
 
 interface Props {
   participants: string[];
 }
 
-export const Wheel: FC<Props> = ({ participants }) => {
+export const Wheel: React.FC<Props> = ({ participants }) => {
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
+  const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
 
-  const sliceAngle = 360 / MAX_SECTORS;
-  const sectorWidth = 1350 / MAX_SECTORS;
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const numSectors = participants.length;
 
-  const getColor = (index: number) => {
-    const colorIndex = index % colors.length;
-    return colors[colorIndex];
+  useEffect(() => {
+    if (canvasRef.current) {
+      drawWheel();
+    }
+  }, [participants, rotation]);
+
+  const drawWheel = () => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext('2d')!;
+    const radius = canvas.width / 2;
+    const sliceAngle = (2 * Math.PI) / numSectors;
+
+    // Clear previous drawing
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.translate(radius, radius);
+    ctx.rotate(-rotation * (Math.PI / 180)); // Rotate canvas for spinning effect
+
+    // Draw sectors
+    for (let i = 0; i < numSectors; i++) {
+      const startAngle = i * sliceAngle;
+      const endAngle = (i + 1) * sliceAngle;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.arc(0, 0, radius, startAngle, endAngle);
+      ctx.closePath();
+      ctx.fillStyle = `hsl(${(i * (360 / numSectors)) % 360}, 100%, 50%)`;
+      ctx.fill();
+
+      // Draw the name in the sector
+      ctx.save();
+      ctx.rotate((startAngle + endAngle) / 2);
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = 'white';
+      ctx.font = '16px Arial';
+      ctx.fillText(participants[i] || '', radius * 0.5, 0);
+      ctx.restore();
+    }
+
+    ctx.rotate(rotation * (Math.PI / 180)); // Reset rotation
+    ctx.translate(-radius, -radius);
+
+    // Draw the static indicator
+    const indicatorLength = 20;
+    const indicatorWidth = 10;
+    ctx.save();
+    ctx.translate(canvas.width, canvas.height / 2);
+    ctx.beginPath();
+    ctx.moveTo(-indicatorLength, -indicatorWidth / 2);
+    ctx.lineTo(0, -indicatorWidth / 2);
+    ctx.lineTo(0, indicatorWidth / 2);
+    ctx.lineTo(-indicatorLength, indicatorWidth / 2);
+    ctx.closePath();
+    ctx.fillStyle = 'red';
+    ctx.fill();
+    ctx.restore();
   };
 
   const startSpin = () => {
+    if (spinning) return;
     setSpinning(true);
-    const randomAngle = Math.floor(Math.random() * 360) + 1800;
-    setRotation(rotation + randomAngle);
 
-    setTimeout(() => {
-      setSpinning(false);
-    }, 5000);
+    const randomRotation = Math.floor(Math.random() * 360) + 1800;
+    const finalRotation = randomRotation % 360;
+    const spinDuration = 6000; // Increased duration
+    const easing = (t: number) => {
+      // Ease-out cubic
+      return 1 - Math.pow(1 - t, 3);
+    };
+
+    let startTime: number;
+
+    const animate = (time: number) => {
+      if (!startTime) startTime = time;
+      const elapsed = time - startTime;
+      const t = Math.min(elapsed / spinDuration, 1);
+      const easeT = easing(t);
+      const currentRotation = finalRotation * easeT;
+
+      setRotation(currentRotation);
+
+      if (elapsed < spinDuration) {
+        requestAnimationFrame(animate);
+      } else {
+        setSpinning(false);
+        determineWinner(currentRotation);
+      }
+    };
+
+    requestAnimationFrame(animate);
   };
 
-  const hasParticipants = participants.length > 0;
+  const determineWinner = (finalRotation: number) => {
+    const sliceAngle = 360 / numSectors;
+    const winningSector = Math.floor((finalRotation % 360) / sliceAngle);
+    setWinnerIndex(winningSector);
+  };
 
   return (
-    <Section>
-      <h2>Wheel</h2>
-      <WheelContainer>
-        <CircleContainer rotation={rotation}>
-          {Array.from({ length: MAX_SECTORS }).map((_, i) => {
-            const rotate = i * sliceAngle;
-            const color = getColor(i);
-            return (
-              <Sector
-                key={i}
-                angle={rotate}
-                color={color}
-                sectorwidth={sectorWidth}
-              />
-            );
-          })}
-          {/* Render names separately so they're not clipped by sectors */}
-          {participants.slice(0, MAX_SECTORS).map((name, i) => {
-            const rotate = i * sliceAngle;
-            return (
-              <Name key={i} angle={rotate}>
-                <i>{name}</i>
-              </Name>
-            );
-          })}
-        </CircleContainer>
-        <WinnerIndicator />
-      </WheelContainer>
-      <Button onClick={startSpin} disabled={spinning || !hasParticipants}>
+    <div>
+      <canvas
+        ref={canvasRef}
+        width={400}
+        height={400}
+        style={{ borderRadius: '50%', border: '2px solid black' }}
+      />
+      <button
+        onClick={startSpin}
+        disabled={participants.length === 0 || spinning}
+      >
         Spin
-      </Button>
-    </Section>
+      </button>
+      {winnerIndex !== null && (
+        <div>
+          <h3>Winner: {participants[winnerIndex]}</h3>
+        </div>
+      )}
+    </div>
   );
 };
