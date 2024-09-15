@@ -74,9 +74,12 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
     if (spinning) return;
     setSpinning(true);
 
-    const randomRotation = Math.floor(Math.random() * 360) + 1800;
-    const finalRotation = randomRotation % 360;
-    const spinDuration = 6000; // Increased duration
+    // Set the number of full rotations and calculate final rotation
+    const numFullRotations = 2.5; // 2.5 full rotations
+    const totalRotation = numFullRotations * 360;
+    const finalRotation = (rotation + totalRotation) % 360;
+
+    const spinDuration = 6000; // Duration of the animation
     const easing = (t: number) => {
       // Ease-out cubic
       return 1 - Math.pow(1 - t, 3);
@@ -89,7 +92,7 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
       const elapsed = time - startTime;
       const t = Math.min(elapsed / spinDuration, 1);
       const easeT = easing(t);
-      const currentRotation = finalRotation * easeT;
+      const currentRotation = rotation + totalRotation * easeT;
 
       setRotation(currentRotation);
 
@@ -97,7 +100,7 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
         requestAnimationFrame(animate);
       } else {
         setSpinning(false);
-        determineWinner(currentRotation);
+        determineWinner(finalRotation);
       }
     };
 
