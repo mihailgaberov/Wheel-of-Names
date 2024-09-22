@@ -10,6 +10,7 @@ export const Section = styled.section`
 
 export const Button = styled.button`
   padding: 1rem;
+  margin: 0.5rem;
   background-color: #282c34;
   color: white;
   border: none;

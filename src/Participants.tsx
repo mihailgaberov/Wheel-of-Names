@@ -89,8 +89,6 @@ export const Participants: FC<ParticipantsProps> = ({
         onChange={(e) => setParticipant(e.target.value)}
         onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
           if (e.key === 'Enter') {
-            // handleAddName(participant);
-            // setParticipant('');
             handleAddParticipant();
           }
         }}
