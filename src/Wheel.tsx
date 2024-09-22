@@ -167,7 +167,7 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
         (spinDirection === 'clockwise' ? -totalRotation : totalRotation)) %
       360;
 
-    const spinDuration = 6000; // Duration of the animation
+    const spinDuration = 6000;
     const easing = (t: number) => {
       // Ease-out cubic
       return 1 - Math.pow(1 - t, 3);
