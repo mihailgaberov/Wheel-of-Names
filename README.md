@@ -51,7 +51,6 @@ Wheel of Names is similar, but allows us to create a virtual wheel, putting our 
 
 1. Sort
 2. Shuffle
-3.
 
 ### Demo
 
