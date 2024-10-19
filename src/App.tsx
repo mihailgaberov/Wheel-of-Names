@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { Participants } from './Participants';
-import { Question } from './Questsion';
+import { Question } from './Question';
 import { Wheel } from './Wheel';
 
 import './App.css';
