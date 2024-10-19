@@ -37,7 +37,8 @@ Wheel of Names is similar, but allows us to create a virtual wheel, putting our 
 
 ### I. Question
 
-1.
+1. This is where users can submit a question or phrase that will determine the focus of the spins.
+2. Any changes made in the input field are saved when the user clicks outside of it (on focus out).
 
 ### II. Wheel
 
