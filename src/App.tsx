@@ -6,17 +6,7 @@ import { Wheel } from './Wheel';
 
 import './App.css';
 import { useState } from 'react';
-
-const Header = styled.header`
-  background-color: #282c34;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-`;
+import { Header } from './Header';
 
 const Main = styled.main`
   display: flex;
@@ -56,9 +46,7 @@ function App() {
 
   return (
     <>
-      <Header>
-        <h1>Wheel of Names</h1>
-      </Header>
+      <Header />
       <Question />
       <Main>
         <Participants
