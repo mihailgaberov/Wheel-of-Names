@@ -42,16 +42,19 @@ Wheel of Names is similar, but allows us to create a virtual wheel, putting our 
 
 ### II. Wheel
 
-1.
+1. The wheel component spins with an easing animation and determines the winner.
+2. The spin direction can be adjusted using the buttons, for either clockwise or counterclockwise rotation.
+3. Each adjacent sector is uniquely colored, and their sizes are calculated proportionally to the number of participants.
 
 ### III. Add Participants
 
-1.
+1. The participant entry area includes an input field for entering a participant's name and an 'ADD' button to add it to the participants list.
+2. To add participants more quickly, the user can press the ENTER key on the keyboard.
 
 ### IV. Participants List
 
-1. Sort
-2. Shuffle
+1. This section displays all the participants' names.
+2. The list offers options to sort the names alphabetically or shuffle them randomly, with both actions dynamically updating the wheel component.
 
 ### Demo
 
