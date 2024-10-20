@@ -8,7 +8,7 @@ Wheel of Names is similar, but allows us to create a virtual wheel, putting our 
 
 ###### Source: https://codingchallenges.fyi/challenges/challenge-wheel/
 
-> _I have written a tutorial about how I did this. You can find it [here](https://www.mihailgaberov.com) or [here](https://www.freecodecamp.org/news/)._
+> _I have written a tutorial about how I did this. You can find it [here](https://www.mihailgaberov.com/build-your-own-wheel-of-names) or [here](https://www.freecodecamp.org/news/)._
 
 <hr />
 
