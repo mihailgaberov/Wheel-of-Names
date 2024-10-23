@@ -2,13 +2,12 @@
 
 ## Build Your Own Wheel of Names
 
-It’s an app, that I presume is inspired by the TV show Wheel of Fortune. In the TV show contestants win prizes for successfully answering question and the Wheel is spun to determine what prize they win.
+This will be an app that I presume is inspired by the TV show Wheel of Fortune. In the TV show, contestants try to figure out a short phrase by guessing letters. If they guess correctly, the letter will be revealed. They spin the wheel to determine how much money each correct letter is worth.
 
-Wheel of Names is similar, but allows us to create a virtual wheel, putting our own names on it, then virtually spin it to determine a winner. I’ve come across several teams who use it as a fun and informal way to determine which team member will run a ceremony from their process - i.e. their next retrospective.
+![Wheel of Names](https://prod-files-secure.s3.us-west-2.amazonaws.com/f89f3b4e-feff-46be-862b-b444d4501857/c2612bdf-2242-4b28-9991-6be72d52e1cf/wheel-of-fortune.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20241023%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20241023T151222Z&X-Amz-Expires=3600&X-Amz-Signature=407efe7f4d771da8a88a8773d90d7f2ec10b56bbec53ac5b9bb0279b10388ac6&X-Amz-SignedHeaders=host&x-id=GetObject)
 
-###### Source: https://codingchallenges.fyi/challenges/challenge-wheel/
-
-> _I have written a tutorial about how I did this. You can find it [here](https://www.mihailgaberov.com/build-your-own-wheel-of-names) or [here](https://www.freecodecamp.org/news/)._
+Wheel of Names is similar, but allows us to create a virtual wheel, putting our own names on it. We can then virtually spin it to determine a winner.
+> _I have written a tutorial about how I did this. You can find it [here](https://www.mihailgaberov.com/build-your-own-wheel-of-names) or [here](https://www.freecodecamp.org/news/build-your-own-wheel-of-names)._
 
 <hr />
 
